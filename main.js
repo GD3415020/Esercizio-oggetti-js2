@@ -1,5 +1,6 @@
-let nome;
-let telefono;
+let id;
+let tel;
+let select = Number(prompt(`Scegli:\n1 per visualizzare tutta la rubrica\n2 per visualizzare un contatto\n3 per aggiungere un contatto\n4 per eliminare un contatto\n5 per modificare un contatto`));
 
 let agenda = {
     contatti: [
@@ -38,16 +39,50 @@ let agenda = {
     aggiungi: function (name, number) {
         let contatto = this.contatti.find(contatto => contatto.nome == name);
         if (contatto) {
-            console.log(`Contatto già presente in rubrica`);            
+            console.log(`Contatto già presente in rubrica`);
         } else {
-            this.contatti.push ({nome: name, telefono: number});
+            this.contatti.push({ nome: name, telefono: number });
             console.log(`CONTATTO AGGIUNTO`);
             this.mostratutti();
+        }
+    },
+
+    modifica: function (name, number) {
+        let contatto = this.contatti.find(contatto => contatto.nome == name);
+        if (contatto) {
+            contatto.telefono = number;
+            console.log(`CONTATTO MODIFICATO`);
+            this.mostratutti();
+        } else {
+            console.log(`Contatto non presente in rubrica`);
         }
     }
 }
 
-// agenda.mostratutti();
-// agenda.mostra(`Giovanni`);
-// agenda.elimina(`Pippo`);
-agenda.aggiungi(`Giovanni, 7777777777`);
+switch (select) {
+    case 1:
+        agenda.mostratutti();
+        break;
+    case 2:
+        id = String(prompt(`inserisci il nome da visualizzare`));
+        agenda.mostra(id);
+        break;
+    case 3:
+        id = String(prompt(`inserisci il nome da aggiungere`));
+        tel = Number(prompt(`inserisci il numero di telefono`));
+        agenda.aggiungi(id, tel);
+        break;
+    case 4:
+        id = String(prompt(`inserisci il nome da eliminare`));
+        agenda.elimina(id);
+        break;
+    case 5:
+        id = String(prompt(`inserisci il nome da modificare`));
+        tel = Number(prompt(`inserisci il nuovo numero di telefono`));
+        agenda.modifica(id, tel);
+        break;
+
+    default:
+        console.log(`scelta non valida`);
+        break;
+}
